@@ -14,11 +14,11 @@ from app.services.extraction_service import process_evidence
 
 router = APIRouter()
 
-@router.post("/{case_id}/evidence", response_model=EvidenceResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/{case_id}/evidence/", response_model=EvidenceResponse, status_code=status.HTTP_201_CREATED)
 async def upload_evidence(
-    case_id: uuid.UUID,
-    uploader_id: uuid.UUID = Form(...),
+    case_id: str,
     file: UploadFile = File(...),
+    uploader_id: str = Form(...),
     db: Session = Depends(get_db)
 ):
     # Validate case
@@ -59,7 +59,7 @@ async def upload_evidence(
     
     return db_evidence
 
-@router.get("/{case_id}/evidence", response_model=List[EvidenceResponse])
+@router.get("/{case_id}/evidence/", response_model=List[EvidenceResponse])
 def list_evidence(case_id: uuid.UUID, db: Session = Depends(get_db)):
     # Validate case exists
     case = db.get(Case, case_id)
@@ -69,7 +69,7 @@ def list_evidence(case_id: uuid.UUID, db: Session = Depends(get_db)):
     result = db.execute(select(Evidence).where(Evidence.case_id == case_id))
     return result.scalars().all()
 
-@router.post("/evidence/{evidence_id}/extract")
+@router.post("/evidence/{evidence_id}/extract/")
 def extract_evidence(evidence_id: uuid.UUID, db: Session = Depends(get_db)):
     evidence = db.get(Evidence, evidence_id)
     if not evidence:

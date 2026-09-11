@@ -28,7 +28,4 @@ neo4j_driver = GraphDatabase.driver(
 )
 
 # ChromaDB Initialization
-chroma_client = chromadb.HttpClient(
-    host=settings.CHROMADB_HOST, 
-    port=settings.CHROMADB_PORT
-)
+chroma_client = chromadb.PersistentClient(path="./chroma_db")
