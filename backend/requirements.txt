@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+pydantic
+python-multipart
+chromadb
+requests
+pypdf
+python-docx
+pytesseract
+pillow
+
